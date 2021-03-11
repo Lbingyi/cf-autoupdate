@@ -4,8 +4,7 @@
 cd /usr
 mkdir dns
 cd dns
-wget https://raw.githubusercontent.com/Lbingyi/cf-autoupdate/cf-openwrt.sh
-wget https://raw.githubusercontent.com/Lbingyi/cf-autoupdate/kill-cf-openwrt.sh 
+wget https://raw.githubusercontent.com/Lbingyi/cf-autoupdate/main/cf-openwrt%20.sh
 ```
 #### 修改cf-openwrt.sh中的两处地方
 bandwidth 处是带宽选择
@@ -17,9 +16,7 @@ bandwidth 处是带宽选择
 ```Bash
 ##0代表分9代表小时，意思是9：00整开始运行脚本
 0 9 * * * bash /usr/dns/cf-openwrt.sh
-5 9 * * * bash /usr/dns/kill-cf-openwrt.sh
 0 20 * * * bash /usr/dns/cf-openwrt.sh
-5 20 * * * bash /usr/dns/kill-cf-openwt.sh
 ```
 添加计划任务
 依次进入 系统-计划任务

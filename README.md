@@ -35,5 +35,5 @@ bash /usr/dns/cf-openwrt.sh
 * 请参考 [better-cloudflare-ip](https://github.com/badafans/better-cloudflare-ip)
 
 ### 特别感谢 ：
-* [wxf2088.xyz](wxf2088.xyz)
+* [wxf2088.xyz](https://wxf2088.xyz)
 * [badafans](https://github.com/badafans/better-cloudflare-ip)

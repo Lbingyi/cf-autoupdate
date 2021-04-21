@@ -3,7 +3,7 @@
 ```Bash
 cd /usr
 mkdir dns
-cd dns
+cd cloudflare
 wget https://raw.githubusercontent.com/Lbingyi/cf-autoupdate/main/cf-openwrt.sh
 ```
 #### 修改cf-openwrt.sh中的两处地方
@@ -16,8 +16,8 @@ wget https://raw.githubusercontent.com/Lbingyi/cf-autoupdate/main/cf-openwrt.sh
 * 0代表分9代表小时，意思是9：00整开始运行脚本
 ```Bash
 
-0 9 * * * bash /usr/dns/cf-openwrt.sh
-0 20 * * * bash /usr/dns/cf-openwrt.sh
+0 9 * * * bash /usr/cloudflare/cf-openwrt.sh
+0 20 * * * bash /usr/cloudflare/cf-openwrt.sh
 ```
 * 添加计划任务
 * 依次进入 系统-计划任务
@@ -28,12 +28,8 @@ wget https://raw.githubusercontent.com/Lbingyi/cf-autoupdate/main/cf-openwrt.sh
 * 到这里就完成全部操作了，然后就是等待自动执行。
 * 当然，我们可以手动来执行一次，执行命令：
 ```Bash
-bash /usr/dns/cf-openwrt.sh
+bash /usr/cloudflare/cf-openwrt.sh
 ```
 
 ## 修改于better-cloudflare-ip
 * 请参考 [better-cloudflare-ip](https://github.com/badafans/better-cloudflare-ip)
-
-### 特别感谢 ：
-* [wxf2088.xyz](https://wxf2088.xyz)
-* [badafans](https://github.com/badafans/better-cloudflare-ip)

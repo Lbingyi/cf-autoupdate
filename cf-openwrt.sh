@@ -1,6 +1,6 @@
 #!/bin/bash
 # random cloudflare anycast ip
-#使用说明：加在openwrt上系统--计划任务里添加定时运行，如0 9 * * * bash /usr/cloudflare/cf-openwrt.sh
+#使用说明：加在openwrt上系统--计划任务里添加定时运行，如0 9 * * * bash /root/cloudflare/cf-openwrt.sh
 #9点0分运行一次。路由上的爬墙软件节点IP全部换成路由IP，如192.168.1.1:8443，端口全部8443
 #使用前请更换自己的推送token
 

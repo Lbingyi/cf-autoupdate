@@ -12,6 +12,12 @@ cd dns
 
 # 下载 cf-openwrt
 wget https://raw.githubusercontent.com/Lbingyi/cf-autoupdate/main/cf-openwrt.sh
+
+# 赋予执行权限
+chmod +x cf-openwrt.sh
+
+# 首次建议手动执行命令
+bash /root/dns/cf-openwrt.sh
 ```
 #### 修改cf-openwrt.sh中的两处地方
 * bandwidth 处是带宽选择

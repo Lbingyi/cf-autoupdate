@@ -24,7 +24,7 @@ do
 		declare -i m
 		declare -i n
 		declare -i per
-		rm -rf icmp temp data.txt meta.txt log.txt anycast.txt temp.txt
+		rm -rf icmp temp data.txt meta.txt log.txt anycast.txt temp.txt speed.txt
 		mkdir icmp
 		while true
 		do

@@ -107,7 +107,7 @@ do
 		rm -rf anycast.txt
 		while true
 		do
-			p=$(ps | grep ping | grep -v "grep" | wc -l)
+			p=$(ps | grep "ping -c 20 -i 1 -n -q" | grep -v "grep" | wc -l)
 			if [ $p -ne 0 ]
 			then
 				echo 等待 ICMP 进程结束:剩余进程数 $p

@@ -1,9 +1,15 @@
 #!/bin/bash
-# random cloudflare anycast ip
-#使用说明：加在openwrt上系统--计划任务里添加定时运行，如0 9 * * * bash /root/cloudflare/cf-openwrt.sh
-#9点0分运行一次。路由上的爬墙软件节点IP全部换成路由IP，如192.168.1.1:8443，端口全部8443
-#使用前请更换自己的推送token
 
+# --------------------------------------------------------------
+#	项目: 基于better-cloudflare-ip的 N1 自动更新 IP
+#	版本: 1.2.0
+#	作者: 鸿煊
+#	项目: https://github.com/Lbingyi/cf-autoupdate
+#	使用说明：加在openwrt上系统--计划任务里添加定时运行，如0 9 * * * bash /usr/dns/cf-openwrt.sh
+#	*解释：9点0分运行一次。
+#	路由上的爬墙软件节点IP全部换成路由IP，如192.168.1.1:8443，端口全部8443
+#	使用前请更换自己的推送token 注册地址下下方
+# --------------------------------------------------------------
 
 localport=8443
 remoteport=443
@@ -21,11 +27,7 @@ while true
 do
 	while true
 	do
-		declare -i m
-		declare -i n
-		declare -i per
-		rm -rf icmp temp data.txt meta.txt log.txt anycast.txt temp.txt speed.txt
-		mkdir icmp
+		rm -rf temp ip.txt data.txt meta.txt log.txt temp.txt speed.txt
 		while true
 		do
 			if [ -f "resolve.txt" ]
@@ -81,44 +83,12 @@ do
 		fi
 		for i in `cat data.txt | sed '1,4d'`
 		do
-			echo $i>>anycast.txt
+			echo $i>>ip.txt
 		done
 		rm -rf meta.txt data.txt
-		n=0
-		m=$(cat anycast.txt | wc -l)
-		for i in `cat anycast.txt`
-		do
-			ping -c 20 -i 1 -n -q $i > icmp/$n.log&
-			n=$[$n+1]
-			per=$n*100/$m
-			while true
-			do
-				p=$(ps -ef | grep ping | grep -v "grep" | wc -l)
-				if [ $p -ge 100 ]
-				then
-					echo 正在测试 ICMP 丢包率:进程数 $p,已完成 $per %
-					sleep 1
-				else
-					echo 正在测试 ICMP 丢包率:进程数 $p,已完成 $per %
-					break
-				fi
-			done
-		done
-		rm -rf anycast.txt
-		while true
-		do
-			p=$(ps | grep ping | grep -v "grep" | wc -l)
-			if [ $p -ne 0 ]
-			then
-				echo 等待 ICMP 进程结束:剩余进程数 $p
-				sleep 1
-			else
-				echo ICMP 丢包率测试完成
-				break
-			fi
-		done
-		cat icmp/*.log | grep 'statistics\|loss\|avg' | sed 'N;N;s/\n/ /g' | awk -F, '{print $1,$3}' | awk '{print $2,$9,$15}' | awk -F% '{print $1,$2}' | awk -F/ '{print $1,$2}' | awk '{print $2,$4,$1}' | sort -n | awk '{print $3}' | sed '21,$d' > ip.txt
-		rm -rf icmp
+		./fping -f ip.txt -c 20 -i 0 > fping.txt
+		sort -t/ -n -k 5 -k 8 fping.txt | cut -f 1 -d: | sed '21,$d' > ip.txt
+		rm -rf fping.txt
 		echo 选取20个丢包率最少的IP地址下载测速
 		mkdir temp
 		for i in `cat ip.txt`
@@ -131,6 +101,7 @@ do
 		echo 测速完成
 		ls -S temp > ip.txt
 		rm -rf temp
+		declare -i n
 		n=$(wc -l ip.txt | awk '{print $1}')
 		if [ $n -ge 3 ]; then
 			first=$(sed -n '1p' ip.txt)

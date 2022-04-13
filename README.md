@@ -2,7 +2,7 @@
 * 用ssh连接软件连接opewrt
 ```Bash
 # 进入root文件夹
-cd /root
+cd /mnt/mmcblk2p4
 
 # 如果是第一次使用，则建议创建新文件夹（后续更新请跳过该步骤）
 mkdir cf-openwrt
